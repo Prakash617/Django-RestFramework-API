@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{%load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel='stylesheet' href='{%static "formApp/css/all.min.css"%}'>
+  <link rel='stylesheet' href='{%static "formApp/css/bootstrap.css"%}'>
+  <link rel='stylesheet' href='{%static "formApp/css/custom.css"%}'>
+  <title>Prakash Api</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center alert alert-info">ModelForm CRUD Project</h2>
+    {%block content%}
+    
+<div class="row">
+
+    <div class="col-sm-4">
+    <h4 class="text-center mt-3">Add New Student</h4>
+    <form action="" class="mt-4" method="POST">{% csrf_token %}
+        {{form.as_p}}
+       <div> <input type="submit" class="basebtn btn btn-outline-info" value="Add"></div>
+    </form>
+    </div>
+
+    <div class="col-sm-8">
+        <h4 class="text-center mt-3">All Students Data</h4>
+        {%if allDbData%}
+
+
+        <table class="table table-striped table-hover mx-5">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {%for rowData in allDbData%}
+                <tr>
+                    <th scope="row">{{rowData.stdId}}</th>
+                    <td>{{rowData.stdName}}</td>
+                    <td>{{rowData.stdEmail}}</td>
+                    <td>{{rowData.stdPassword}}</td>
+                    <td>
+                        <a href="{%url 'update' rowData.stdId%}" class="btn btn-outline-info">Edit</a>
+
+                        <form action="{%url 'delete' rowData.stdId %}" class="d-inline mx-1" method="POST">{% csrf_token %}
+                            <input type="submit" value="Delete" class="btn btn-outline-danger">
+                        </form>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+            
+          </table>
+        
+
+        {%else%}
+        <h3 class="mx-5">No Data</h3>
+        {%endif%}
+
+
+    </div>
+</div>
+    {%endblock content%}
+</div>
+<script src='{%static "formApp/js/jquery.js"%}'></script>
+<script src='{%static "formApp/js/popper.js"%}'></script> 
+<script src='{%static "formApp/js/bootstrap.js"%}'></script> 
+<script src='{%static "formApp/js/all.min.js"%}'></script>  
+<script src='{%static "formApp/js/my.js"%}'></script>
+</body>
+</html>
